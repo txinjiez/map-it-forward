@@ -12,9 +12,7 @@ import streamlit as st
 
 import streamlit_js_eval as stjs
 
-
 import folium
-
 from streamlit_folium import st_folium
 from PIL import Image
 
@@ -28,7 +26,7 @@ st.set_page_config(
 )
 
 #Bug report system
-st.sidebar.info(f'If you find a bug, please report it [here.](https://github.com/orgs/ELROSTEM/discussions/1)')
+st.sidebar.info(f'If you find a bug, please report it [here.](https://github.com/Rhyzhang/map-it-forward/issues)')
 
 # Logo
 logo = Image.open('image/logo.jpg')
@@ -37,27 +35,38 @@ st.image(logo, width=300)
 st.title('Map It Forward')
 st.markdown("## Show where you want community imporvemnts!")
 
-if st.checkbox("Check my location"):
-    loc = stjs.get_geolocation()
-    st.write(f"Your coordinates are {loc}")
+# Get Location
+loc = stjs.get_geolocation()
+# st.write(f"Your coordinates are {loc}")
+lat = loc["coords"]["latitude"]
+lon = loc["coords"]["longitude"]
 
-# center on Liberty Bell, add marker
-m = folium.Map(location=[40.730610, -73.935242], zoom_start=12)
+# Map Location
+m = folium.Map(location=[lat, lon], zoom_start=12)
 folium.Marker(
-    [40.730610, -73.935242], popup="Location", tooltip="Location"
+    [lat, lon], popup="Location", tooltip="Your Current Location"
 ).add_to(m)
 
 st_folium(m, width=725, returned_objects=[])
 
+
+
+# Get submissions
 df = pd.read_csv("database/submissions.csv")
 # Create a form to submit a submission
 with st.form("Add submission", clear_on_submit=True):
-    name = st.text_input("Name")
+    today_date = date.today().strftime("%m/%d/%Y")
+    age = st.number_input("Age", min_value=0, max_value=100, value=0)
+    category = st.multiselect("Category", ["Roads", "Parks", "Schools", "Housing", "Other"])
+    address = st.text_input("Address")
+    reccomendation = st.text_area("Reccomendation")
+    severity = st.slider("Severity", min_value=0, max_value=10, value=0)
     description = st.text_area("Description")
+    
     submit_button = st.form_submit_button("Submit")
 if submit_button:
 
-    df.loc[len(df)] = [date.today().strftime("%m/%d/%Y"), name, description]
+    df.loc[len(df)] = [today_date, age, category, lat, lon, address, reccomendation, severity, description]
     df.to_csv("database/submissions.csv", index=False)
     
     st.success("Submission submitted!")

@@ -1,1 +1,5 @@
 date,age,category,lat,lon,address,recommendation,severity,description
+08/30/2023,0,[],40.7724,-73.8261,,,0,
+08/30/2023,4,['Schools'],0.0,0.0,,,0,
+08/30/2023,1,['Parks'],40.7724,-73.8261,"142-12, 29th Avenue, Linden Hill, Queens County, City of New York, New York, 11354, United States",basd,1,gadsf
+08/30/2023,1,['Parks'],40.7724,-73.8261,"142-12, 29th Avenue, Linden Hill, Queens County, City of New York, New York, 11354, United States",asd,1,asdfg

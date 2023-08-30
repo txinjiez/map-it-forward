@@ -22,14 +22,12 @@ submissions = pd.read_csv("database/submissions.csv")
 
 st.table(submissions)
 
-
-
 # Map Location
 m = folium.Map(location=[40.712772, -74.006058], zoom_start=12)
 
 for index,row in submissions.iterrows():
     folium.Marker(
-        [row["lat"], row["lon"]], popup=row["category"], tooltip=row["severity"]
+        [row["lat"], row["lon"]], popup=row["recommendation"], tooltip=row["category"]
     ).add_to(m)
 
 

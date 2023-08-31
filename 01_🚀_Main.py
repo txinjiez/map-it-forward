@@ -30,7 +30,7 @@ st.set_page_config(
 st.sidebar.info(f'If you find a bug, please report it [here.](https://github.com/Rhyzhang/map-it-forward/issues)')
 
 # Logo
-logo = Image.open('image/logo.jpg')
+logo = Image.open('image/miflogo.PNG')
 st.image(logo, width=300)
 
 st.title('Map It Forward')

@@ -22,7 +22,7 @@ st.set_page_config(
      page_icon="📍",
      initial_sidebar_state="expanded",
      menu_items={
-         'About': "Show where you want community imporvemnts!"
+         'About': "participatory community mapping tool!"
      }
 )
 

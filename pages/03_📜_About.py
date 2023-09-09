@@ -5,7 +5,7 @@ st.set_page_config(
      page_icon="📍",
      initial_sidebar_state="expanded",
      menu_items={
-         'About': participatory community mapping"
+         "Participatory community mapping"
      }
 )
 

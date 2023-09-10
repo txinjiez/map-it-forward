@@ -17,6 +17,9 @@ import folium
 from streamlit_folium import st_folium
 from PIL import Image
 
+def get_pos(lat, lng):
+    return lat, lng
+
 st.set_page_config(
      page_title="Map It Forward",
      page_icon="📍",
@@ -39,21 +42,44 @@ st.markdown("## Show where you want community imporvemnts!")
 # Load data
 submissions = pd.read_csv("database/submissions.csv")
 
-# Map
+# Select Postion Map
+with st.expander("Select Postion on Map"):
+    if 'pos' not in st.session_state:
+        st.session_state.pos = None
+    m = folium.Map(location=[40.712772, -74.006058], zoom_start=10, min_zoom=10, min_lat = 40.3, max_lat = 40.98, min_lon = -73.5, max_lon = -74.4, max_bounds = True)
+    m.add_child(folium.LatLngPopup())
+    map = st_folium(m, height=350, width=700)
+
+    data = None
+    if map.get("last_clicked"):
+        data = get_pos(map["last_clicked"]["lat"], map["last_clicked"]["lng"])
+    if data is not None:
+        st.session_state.pos = data
+        st.info("Your location is: " + str(st.session_state.pos))
+
+# Initial Map
 map_container = st.empty()
 with map_container:
-    m = folium.Map(location=[40.712772, -74.006058], zoom_start=10)
+    m = folium.Map(location=[40.712772, -74.006058], zoom_start=10, min_zoom=10, min_lat = 40.3, max_lat = 40.98, min_lon = -73.5, max_lon = -74.4, max_bounds = True)
     for index,row in submissions.iterrows():
         folium.Marker(
             [row["lat"], row["lon"]], popup=row["recommendation"], tooltip=row["category"]
         ).add_to(m)
+    st_folium(m, height=350, width=725, returned_objects=[])
+# If user has selected a location, show it on the map
+if st.session_state.pos is not None:
+    lat, lon = st.session_state.pos
+    with map_container:
+        m = folium.Map(location=[40.712772, -74.006058], zoom_start=10, min_zoom=10, min_lat = 40.3, max_lat = 40.98, min_lon = -73.5, max_lon = -74.4, max_bounds = True)
+        folium.Marker(
+            [st.session_state.pos[0], st.session_state.pos[1]], popup="Location", tooltip="Your Current Location"
+        ).add_to(m)
+        st_folium(m, height=350, width=725, returned_objects=[])
 
-    st_folium(m, width=725, returned_objects=[])
-
-# Get Location if User wants
+# Auto get Location if User wants
 loc = False
 geolocator = Nominatim(user_agent="community-service")
-if st.checkbox("Check my location", help="Need trouble shooting? Go to about page: ..."):
+if st.button("Check my location automatically", help="Need trouble shooting? Go to about page: ..."):
     loc = stjs.get_geolocation()
     sleep(1)
     st.info("The accuracy is: " + str(loc["coords"]["accuracy"]))
@@ -61,13 +87,11 @@ if st.checkbox("Check my location", help="Need trouble shooting? Go to about pag
     lon = loc["coords"]["longitude"]
 
     with map_container:
-        m = folium.Map(location=[lat, lon], zoom_start=12)
+        m = folium.Map(location=[lat, lon], zoom_start=12, min_zoom=10, min_lat = 40.3, max_lat = 40.98, min_lon = -73.5, max_lon = -74.4, max_bounds = True)
         folium.Marker(
             [lat, lon], popup="Location", tooltip="Your Current Location"
         ).add_to(m)
-
-        st_folium(m, width=725, returned_objects=[])
-
+        map = st_folium(m, height=350, width=725, returned_objects=[])
 
 # Get submissions
 df = pd.read_csv("database/submissions.csv")
@@ -77,7 +101,7 @@ with st.form("Add submission", clear_on_submit=True):
     age = st.number_input("Age", min_value=0, max_value=100, value=0)
     category = st.multiselect("Category", ["Roads", "Parks", "Schools", "Housing", "Other"])
     
-    if loc:
+    if loc or st.session_state.pos is not None:
         # Automatically fill in the location and address
         lat = st.number_input("Latitude", min_value=-90.0, max_value=90.0, format="%f", value=float(lat))
         lon = st.number_input("Longitude", min_value=-180.0, max_value=180.0, format="%f", value=float(lon))
@@ -104,3 +128,31 @@ with st.form("Add submission", clear_on_submit=True):
             st.success("Submission submitted!")
             sleep(1)
             st.experimental_rerun()
+
+
+
+
+
+
+
+# def get_pos(lat, lng):
+#     return lat, lng
+
+# m = folium.Map(location=[40.712772, -74.006058], zoom_start=12)
+# m.add_child(folium.LatLngPopup())
+
+# map = st_folium(m, height=350, width=700)
+
+# data = None
+# if map.get("last_clicked"):
+#     data = get_pos(map["last_clicked"]["lat"], map["last_clicked"]["lng"])
+    
+
+# if data is not None:
+#     folium.Marker(
+#         [data[0], data[1]], popup="hi", tooltip="Your Current Location"
+#     ).add_to(m)
+#     st_folium(m, width=725, returned_objects=[])
+#     st.write(data) # Writes to the app
+#     print(data) # Writes to terminal
+

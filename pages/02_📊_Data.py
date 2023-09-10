@@ -30,5 +30,7 @@ for index,row in submissions.iterrows():
         [row["lat"], row["lon"]], popup=row["recommendation"], tooltip=row["category"]
     ).add_to(m)
 
-
 st_folium(m, width=725, returned_objects=[])
+
+
+

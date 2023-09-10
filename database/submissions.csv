@@ -1,5 +1,3 @@
 date,age,category,lat,lon,address,recommendation,severity,description
-08/30/2023,0,[],40.7724,-73.8261,,,0,
-08/30/2023,4,['Schools'],0.0,0.0,,,0,
-08/30/2023,1,['Parks'],40.7724,-73.8261,"142-12, 29th Avenue, Linden Hill, Queens County, City of New York, New York, 11354, United States",basd,1,gadsf
-08/30/2023,1,['Parks'],40.7724,-73.8261,"142-12, 29th Avenue, Linden Hill, Queens County, City of New York, New York, 11354, United States",asd,1,asdfg
+09/09/2023,15,['Parks'],40.72962959918958,-73.83495068538652,"Meadow Lake Drive, Queens County, City of New York, New York, 11367, United States",Put Nets,3,There are no nets on the basketball hoops
+09/09/2023,100,['Roads'],40.758285914793625,-73.829224705205,"Phở Hoàng, 41-01, Kissena Boulevard, Flushing Chinatown, Queens County, City of New York, New York, 11355, United States",Cleaning,1,Bird and bird poop everywhere 

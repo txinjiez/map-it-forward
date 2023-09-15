@@ -2,3 +2,4 @@ streamlit_js_eval
 streamlit-folium
 folium
 geopy
+streamlit-echarts

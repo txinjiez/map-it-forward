@@ -65,11 +65,24 @@ st.set_page_config(
      }
 )
 
-st.title("🚧     SITE UNDER CONSTRUCTION       🏗️")
-
+st.title("🚧 Submission Data 🏗️")
 
 # Load data
 submissions = pd.read_csv("database/submissions.csv")
+
+# Map Location
+m = folium.Map(location=[40.712772, -74.006058], zoom_start=12)
+
+for index,row in submissions.iterrows():
+    folium.Marker(
+        [row["lat"], row["lon"]], tooltip=row["category"],
+        popup=(row["recommendation"] + '<br>Severity=' + str(row["severity"])), 
+    ).add_to(m)
+
+st_folium(m, width=725, returned_objects=[])
+
+# Data table
+st.dataframe(submissions)
 
 # Pie chart of counties
 address = submissions.loc[0:, "address"]
@@ -79,17 +92,11 @@ for elem in address.tolist():
     countyDict[county] = countyDict.get(county, 0) + 1
 render_pie("Counties", countyDict)
 
-st.dataframe(submissions)
-
-# Map Location
-m = folium.Map(location=[40.712772, -74.006058], zoom_start=12)
-
-for index,row in submissions.iterrows():
-    folium.Marker(
-        [row["lat"], row["lon"]], popup=row["recommendation"], tooltip=row["category"]
-    ).add_to(m)
-
-st_folium(m, width=725, returned_objects=[])
-
+# Pie chart of severity
+severity = submissions.loc[0:, "severity"]
+severityDict = dict()
+for elem in severity.tolist():
+    severityDict[elem] = severityDict.get(elem, 0) + 1
+render_pie("Severity", severityDict)
 
 

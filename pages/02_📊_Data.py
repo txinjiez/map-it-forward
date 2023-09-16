@@ -6,6 +6,7 @@ from streamlit_folium import st_folium
 from streamlit_echarts import JsCode, st_echarts
 
 # Chart helper functions
+# Renders a pie chart (modified from https://echarts.streamlit.app/)
 def render_pie(title, data):
     dataList = []
     minValue, maxValue = 0, 0
@@ -81,22 +82,34 @@ for index,row in submissions.iterrows():
 
 st_folium(m, width=725, returned_objects=[])
 
-# Data table
+# Dataframe
 st.dataframe(submissions)
 
-# Pie chart of counties
-address = submissions.loc[0:, "address"]
-countyDict = dict()
-for elem in address.tolist():
-    county = elem.split(", ")[-5]
-    countyDict[county] = countyDict.get(county, 0) + 1
-render_pie("Counties", countyDict)
+# Gets a dictionary of all of the items in a column and their counts
+def get_project_dict(column, isCompletedOption):
+    columnSeries = submissions.loc[0:, column]
+    columnDict = dict()
+    for i in range(len(columnSeries.tolist())):
+        elem = columnSeries.tolist()[i]
+        if column == "address": 
+            elem = columnSeries.tolist()[i].split(", ")[-5]
+        # Only add to dictionary if the project is what the user wants to see
+        if isCompletedOption == 'All projects':
+            columnDict[elem] = columnDict.get(elem, 0) + 1
+        elif isCompletedOption == 'Incomplete projects only':
+            if submissions.loc[i, "status"] == 'Incomplete':
+                columnDict[elem] = columnDict.get(elem, 0) + 1
+        elif isCompletedOption == 'Completed projects only':
+            if submissions.loc[i, "status"] == 'Completed':
+                columnDict[elem] = columnDict.get(elem, 0) + 1
+    return columnDict
 
-# Pie chart of severity
-severity = submissions.loc[0:, "severity"]
-severityDict = dict()
-for elem in severity.tolist():
-    severityDict[elem] = severityDict.get(elem, 0) + 1
-render_pie("Severity", severityDict)
+# Pie charts
+isCompletedOption = st.selectbox(
+    'What projects do you want to see?',
+    ('All projects', 'Incomplete projects only', 'Completed projects only'))
+
+render_pie("Counties", get_project_dict("address", isCompletedOption))
+render_pie("Severity", get_project_dict("severity", isCompletedOption))
 
 

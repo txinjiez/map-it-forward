@@ -1,3 +1,3 @@
-date,age,category,lat,lon,address,recommendation,severity,description
-09/09/2023,15,['Parks'],40.72962959918958,-73.83495068538652,"Meadow Lake Drive, Queens County, City of New York, New York, 11367, United States",Put Nets,3,There are no nets on the basketball hoops
-09/09/2023,100,['Roads'],40.758285914793625,-73.829224705205,"Phở Hoàng, 41-01, Kissena Boulevard, Flushing Chinatown, Queens County, City of New York, New York, 11355, United States",Cleaning,1,Bird and bird poop everywhere 
+date,age,category,lat,lon,address,recommendation,severity,description,status
+09/09/2023,15,['Parks'],40.72962959918958,-73.83495068538652,"Meadow Lake Drive, Queens County, City of New York, New York, 11367, United States",Put Nets,3,There are no nets on the basketball hoops,Incomplete
+09/09/2023,100,['Roads'],40.758285914793625,-73.829224705205,"Phở Hoàng, 41-01, Kissena Boulevard, Flushing Chinatown, Queens County, City of New York, New York, 11355, United States",Cleaning,1,Bird and bird poop everywhere,Incomplete

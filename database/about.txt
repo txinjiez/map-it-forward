@@ -1,16 +1,16 @@
 # About
 
 **WELCOME to Map It Forward!**
-Wanna improve the community?
 
-![Alt Text](https://media.giphy.com/media/L4fB9di7ekn3F5PXaW/giphy.gif)
+M.I.F is a participatory community mapping tool and platform. 
 
-# How to
+Traditional community mapping involves people identifying the assets—attributes of communities that its residents share and value—within their neighborhood. Beyond noting existing assets and resources, Map It Forward recognizes the need and potential for folks to share what transformation they would like to see in the spaces they interact with.
 
-1. DO stuff
-2. Do another stuff
+Our hope is that using Map It Forward community members can become more conscious of community needs, then people are empowered to engage in community development processes. Further down the line, Map It Forward hopes to serve as a strategic tool to organize and mobilize folks to directly create these changes through active projects, facilitated by community stakeholders. 
 
-  
+Map It Forward is motivated by the idea of paying it forward: when someone does something for you, instead of paying that person back directly, you pass it on to another person. We believe in the cyclical sustainability of sharing and improving within and beyond our communities as well as in the future-forward direction inspired by the visions of community members. 
+
+ 
 # How do I contribute?
 
 We LOVE contributors 🤩. If you have any ideas for questions or want to help with the code go here:
@@ -19,3 +19,4 @@ We LOVE contributors 🤩. If you have any ideas for questions or want to help w
 # Contributors
 > Tina Zeng
 > Ryan Zhang 
+> Daniel Halpern
